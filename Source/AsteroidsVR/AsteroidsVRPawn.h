@@ -10,15 +10,15 @@ class AAsteroidsVRPawn : public APawn
 
 		/** StaticMesh component that will be the visuals for our flying pawn */
 		UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* PlaneMesh;
+		class UStaticMeshComponent* PlaneMesh;
 
 	/** Spring arm that will offset the camera */
 	UPROPERTY(Category = Camera, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* SpringArm;
+		class USpringArmComponent* SpringArm;
 
 	/** Camera component that will be our viewpoint */
 	UPROPERTY(Category = Camera, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* Camera;
+		class UCameraComponent* Camera;
 public:
 	AAsteroidsVRPawn();
 
@@ -62,7 +62,7 @@ private:
 	UPROPERTY(Category = Plane, EditAnywhere)
 		float BrakeSpeed;
 
-		/** Min forward speed */
+	/** Min forward speed */
 	UPROPERTY(Category = Plane, EditAnywhere)
 		float MinSpeed;
 
@@ -84,7 +84,7 @@ private:
 	UPROPERTY(Category = Rot, EditAnywhere)
 		float YawSpeed;
 
-	
+
 
 	/** Current forward speed */
 	float CurrentForwardSpeed;
@@ -98,9 +98,13 @@ private:
 	/** Current roll speed */
 	float CurrentRollSpeed;
 
-	FVector2D LeftControl;
+protected:
 
-	FVector2D RightControl;
+	UPROPERTY(Category = Plane, BlueprintReadOnly)
+		FVector2D LeftControl;
+
+	UPROPERTY(Category = Plane, BlueprintReadOnly)
+		FVector2D RightControl;
 
 public:
 	/** Returns PlaneMesh subobject **/
