@@ -8,4 +8,5 @@ AAsteroidsVRGameMode::AAsteroidsVRGameMode()
 {
 	// set default pawn class to our flying pawn
 	DefaultPawnClass = AAsteroidsVRPawn::StaticClass();
+
 }

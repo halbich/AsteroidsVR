@@ -33,23 +33,18 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override; // Allows binding actions/axes to functions
 	// End APawn overrides
 
-	/** Bound to the thrust axis */
-	void ThrustInput(float Val);
+public:
+	UFUNCTION(BlueprintCallable, Category = "Plane Control")
+		void LeftUp(float Val);
 
-	/** Bound to the vertical axis */
-	void MoveUpInput(float Val);
+	UFUNCTION(BlueprintCallable, Category = "Plane Control")
+		void LeftRight(float Val);
 
-	/** Bound to the horizontal axis */
-	void MoveRightInput(float Val);
+	UFUNCTION(BlueprintCallable, Category = "Plane Control")
+		void RightUp(float Val);
 
-
-	void LeftUp(float Val);
-
-	void LeftRight(float Val);
-
-	void RightUp(float Val);
-
-	void RightRight(float Val);
+	UFUNCTION(BlueprintCallable, Category = "Plane Control")
+		void RightRight(float Val);
 
 
 private:
@@ -98,6 +93,8 @@ private:
 	/** Current roll speed */
 	float CurrentRollSpeed;
 
+	bool UseKinect;
+
 protected:
 
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
@@ -113,4 +110,7 @@ public:
 	FORCEINLINE class USpringArmComponent* GetSpringArm() const { return SpringArm; }
 	/** Returns Camera subobject **/
 	FORCEINLINE class UCameraComponent* GetCamera() const { return Camera; }
+
+	UFUNCTION(BlueprintCallable, Category = "Plane control")
+		void SetNewUseKinect(bool useKinect);
 };

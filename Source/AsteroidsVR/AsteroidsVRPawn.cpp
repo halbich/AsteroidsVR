@@ -49,6 +49,8 @@ AAsteroidsVRPawn::AAsteroidsVRPawn()
 	PitchSpeed = -70.0f;
 	YawSpeed = 150.0f;
 
+	UseKinect = true;
+
 }
 
 void AAsteroidsVRPawn::Tick(float DeltaSeconds)
@@ -103,10 +105,10 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 	// Call any parent class Tick implementation
 	Super::Tick(DeltaSeconds);
 
-	print(*FString::SanitizeFloat(CurrentYawSpeed));
+	/*print(*FString::SanitizeFloat(CurrentYawSpeed));
 	print(*FString::SanitizeFloat(CurrentPitchSpeed));
 	print(*FString::SanitizeFloat(CurrentRollSpeed));
-	print(TEXT(""));
+	print(TEXT(""));*/
 }
 
 void AAsteroidsVRPawn::NotifyHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
@@ -129,66 +131,40 @@ void AAsteroidsVRPawn::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	PlayerInputComponent->BindAxis("RightRight", this, &AAsteroidsVRPawn::RightRight);
 }
 
-void AAsteroidsVRPawn::ThrustInput(float Val)
-{
-	//// Is there no input?
-	//bool bHasInput = !FMath::IsNearlyEqual(Val, 0.f);
-	//// If input is not held down, reduce speed
-	//float CurrentAcc = bHasInput ? (Val * Acceleration) : (-0.5f * Acceleration);
-	//// Calculate new speed
-	//float NewForwardSpeed = CurrentForwardSpeed + (GetWorld()->GetDeltaSeconds() * CurrentAcc);
-	//// Clamp between MinSpeed and MaxSpeed
-	//CurrentForwardSpeed = FMath::Clamp(NewForwardSpeed, MinSpeed, MaxSpeed);
-}
-
-void AAsteroidsVRPawn::MoveUpInput(float Val)
-{
-	//// Target pitch speed is based in input
-	//float TargetPitchSpeed = (Val * TurnSpeed * -1.f);
-
-	//// When steering, we decrease pitch slightly
-	//TargetPitchSpeed += (FMath::Abs(CurrentYawSpeed) * -0.2f);
-
-	//// Smoothly interpolate to target pitch speed
-	//CurrentPitchSpeed = FMath::FInterpTo(CurrentPitchSpeed, TargetPitchSpeed, GetWorld()->GetDeltaSeconds(), 2.f);
-}
-
-void AAsteroidsVRPawn::MoveRightInput(float Val)
-{
-	//// Target yaw speed is based on input
-	//float TargetYawSpeed = (Val * TurnSpeed);
-
-	//// Smoothly interpolate to target yaw speed
-	//CurrentYawSpeed = FMath::FInterpTo(CurrentYawSpeed, TargetYawSpeed, GetWorld()->GetDeltaSeconds(), 2.f);
-
-	//// Is there any left/right input?
-	//const bool bIsTurning = FMath::Abs(Val) > 0.2f;
-
-	//// If turning, yaw value is used to influence roll
-	//// If not turning, roll to reverse current roll value
-	//float TargetRollSpeed = bIsTurning ? (CurrentYawSpeed * 0.5f) : (GetActorRotation().Roll * -2.f);
-
-	//// Smoothly interpolate roll speed
-	//CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, TargetRollSpeed, GetWorld()->GetDeltaSeconds(), 2.f);
-}
 
 
 void AAsteroidsVRPawn::LeftUp(float Val)
 {
+	print(TEXT("LU"));
 	LeftControl.Y = Val;
 }
 
 void AAsteroidsVRPawn::LeftRight(float Val)
 {
+	if (UseKinect)
+		return;
+
 	LeftControl.X = Val;
 }
 
 void AAsteroidsVRPawn::RightUp(float Val)
 {
+	if (UseKinect)
+		return;
 	RightControl.Y = Val;
 }
 
 void AAsteroidsVRPawn::RightRight(float Val)
 {
+	if (UseKinect)
+		return;
 	RightControl.X = Val;
+}
+
+void AAsteroidsVRPawn::SetNewUseKinect(bool useKinect)
+{
+	if (UseKinect)
+		return;
+	UseKinect = useKinect;
+
 }
