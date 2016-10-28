@@ -49,6 +49,8 @@ AAsteroidsVRPawn::AAsteroidsVRPawn()
 	PitchSpeed = -70.0f;
 	YawSpeed = 150.0f;
 
+	UseKinect = true;
+
 }
 
 void AAsteroidsVRPawn::Tick(float DeltaSeconds)
@@ -133,9 +135,7 @@ void AAsteroidsVRPawn::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 
 void AAsteroidsVRPawn::LeftUp(float Val)
 {
-	if (UseKinect)
-		return;
-
+	print(TEXT("LU"));
 	LeftControl.Y = Val;
 }
 
