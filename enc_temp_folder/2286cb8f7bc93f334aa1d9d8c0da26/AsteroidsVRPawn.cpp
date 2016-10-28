@@ -163,6 +163,8 @@ void AAsteroidsVRPawn::RightRight(float Val)
 
 void AAsteroidsVRPawn::SetNewUseKinect(bool useKinect)
 {
+	if (UseKinect)
+		return;
 	UseKinect = useKinect;
 
 }
