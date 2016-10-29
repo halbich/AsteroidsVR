@@ -3,6 +3,7 @@
 #pragma once
 
 #include "FCustomKinectMeasure.h"
+#include "FKinectSetupConfigSection.h"
 #include "MyBPFunctionLibrary.generated.h"
 
 /**
@@ -21,4 +22,12 @@ class ASTEROIDSVR_API UMyBPFunctionLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "AsteroidsBPLibrary")
 		static FCustomKinectMeasure GetMostCenteredPosition(UPARAM(ref) TArray<FCustomKinectMeasure>& measures);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AsteroidsBPLibrary")
+		static TArray<FKinectSetupConfigSection> GetDefaultKinectConfigSetup();
+
+
+private:
+
+	
 };

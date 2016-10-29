@@ -34,3 +34,28 @@ FCustomKinectMeasure UMyBPFunctionLibrary::GetMostCenteredPosition(UPARAM(ref) T
 	return measure;
 
 }
+
+
+TArray<FKinectSetupConfigSection> UMyBPFunctionLibrary::GetDefaultKinectConfigSetup()
+{
+	TArray<FKinectSetupConfigSection> result;
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("front"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("front")), EKinectMeasurePoseEnum::Front));
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("top"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("top")), EKinectMeasurePoseEnum::Top));
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("bottom"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("bottom")), EKinectMeasurePoseEnum::Bottom));
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("right"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("right")), EKinectMeasurePoseEnum::Right));
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("left"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("left")), EKinectMeasurePoseEnum::Left));
+
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("jedeme"))));
+
+	return result;
+}
