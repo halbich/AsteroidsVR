@@ -165,4 +165,26 @@ void AAsteroidsVRPawn::SetNewUseKinect(bool useKinect)
 {
 	UseKinect = useKinect;
 
+	currentKinectConfig = nullptr;
+
+	if (!useKinect)
+		return;
+
+	auto pc = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!pc)
+		return;
+
+
+
+	auto sc = pc->GetComponentByClass(UKinectSetupComponent::StaticClass());
+
+	if (sc)
+		currentKinectConfig = Cast<UKinectSetupComponent>(sc);
+
+}
+
+void AAsteroidsVRPawn::RegisterSetupComponent(UKinectSetupComponent* kinectConfig)
+{
+
+
 }

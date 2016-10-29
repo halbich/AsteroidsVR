@@ -18,4 +18,7 @@ class ASTEROIDSVR_API UMyBPFunctionLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AsteroidsBPLibrary")
 		static FCustomKinectMeasure GetEmptyMeasure();
+
+	UFUNCTION(BlueprintCallable, Category = "AsteroidsBPLibrary")
+		static FCustomKinectMeasure GetMostCenteredPosition(UPARAM(ref) TArray<FCustomKinectMeasure>& measures);
 };

@@ -1,6 +1,7 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Pawn.h"
+#include "KinectSetupComponent.h"
 #include "AsteroidsVRPawn.generated.h"
 
 UCLASS(config = Game)
@@ -95,6 +96,8 @@ private:
 
 	bool UseKinect;
 
+	UKinectSetupComponent* currentKinectConfig;
+
 protected:
 
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
@@ -113,4 +116,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void SetNewUseKinect(bool useKinect);
+
+	UFUNCTION(BlueprintCallable, Category = "Plane control")
+		void RegisterSetupComponent(UKinectSetupComponent* kinectConfig);
 };

@@ -9,7 +9,7 @@ UMyBPFunctionLibrary::UMyBPFunctionLibrary(const class FObjectInitializer& PCIP)
 
 }
 
-//Happy Message
+
 void UMyBPFunctionLibrary::UpdateValue(FCustomKinectMeasure& measure, FVector value, EKinectMeasureEnum type)
 {
 	measure.UpdateValue(value, type);
@@ -18,4 +18,19 @@ void UMyBPFunctionLibrary::UpdateValue(FCustomKinectMeasure& measure, FVector va
 FCustomKinectMeasure UMyBPFunctionLibrary::GetEmptyMeasure() {
 	FCustomKinectMeasure measure;
 	return measure;
+}
+
+FCustomKinectMeasure UMyBPFunctionLibrary::GetMostCenteredPosition(UPARAM(ref) TArray<FCustomKinectMeasure>& measures)
+{
+	FCustomKinectMeasure measure;
+
+	for (FCustomKinectMeasure m : measures)
+	{
+		measure += m;
+	}
+
+	measure /= measures.Num();
+
+	return measure;
+
 }

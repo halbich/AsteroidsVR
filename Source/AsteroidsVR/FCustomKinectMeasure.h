@@ -4,24 +4,7 @@
 
 #include "FCustomKinectMeasure.Generated.h"
 
-UENUM(BlueprintType)		//"BlueprintType" is essential to include
-enum class EKinectMeasureEnum : uint8
-{
-	Null				UMETA(DisplayName = "NULL"),
-	BaseOfSpine			UMETA(DisplayName = "BaseOfSpine"),
-	MiddlefSpine		UMETA(DisplayName = "MiddlefSpine"),
-	Neck				UMETA(DisplayName = "Neck"),
-	Head				UMETA(DisplayName = "Head"),
-	LeftShoulder		UMETA(DisplayName = "LeftShoulder"),
-	LeftElbow			UMETA(DisplayName = "LeftElbow"),
-	LeftWrist			UMETA(DisplayName = "LeftWrist"),
-	LeftHand			UMETA(DisplayName = "LeftHand"),
-	RightShoulder		UMETA(DisplayName = "RightShoulder"),
-	RightElbow			UMETA(DisplayName = "RightElbow"),
-	RightWrist			UMETA(DisplayName = "RightWrist"),
-	RightHand			UMETA(DisplayName = "RightHand")
 
-};
 
 
 /**
@@ -89,6 +72,62 @@ struct ASTEROIDSVR_API FCustomKinectMeasure
 		RightWrist = FVector::ZeroVector;
 		RightHand = FVector::ZeroVector;
 	}
+
+
+	FCustomKinectMeasure& operator+=(const FCustomKinectMeasure& rhs)		// compound assignment (does not need to be a member,
+	{																		// but often is, to modify the private members)
+
+		BaseOfSpine = rhs.BaseOfSpine;
+		MiddlefSpine = rhs.MiddlefSpine;
+		Neck = rhs.Neck;
+		Head = rhs.Head;
+		LeftShoulder = rhs.LeftShoulder;
+		LeftElbow = rhs.LeftElbow;
+		LeftWrist = rhs.LeftWrist;
+		LeftHand = rhs.LeftHand;
+		RightShoulder = rhs.RightShoulder;
+		RightElbow = rhs.RightElbow;
+		RightWrist = rhs.RightWrist;
+		RightHand = rhs.RightHand;
+
+		return *this; // return the result by reference
+	}
+
+	// friends defined inside class body are inline and are hidden from non-ADL lookup
+	friend FCustomKinectMeasure operator+(FCustomKinectMeasure lhs,			// passing lhs by value helps optimize chained a+b+c
+		const FCustomKinectMeasure& rhs)									// otherwise, both parameters may be const references
+	{
+		lhs += rhs; // reuse compound assignment
+		return lhs; // return the result by value (uses move constructor)
+	}
+
+	FCustomKinectMeasure& operator/=(const float& rhs)		// compound assignment (does not need to be a member,
+	{																		// but often is, to modify the private members)
+
+		BaseOfSpine /= rhs;
+		MiddlefSpine /= rhs;
+		Neck /= rhs;
+		Head /= rhs;
+		LeftShoulder /= rhs;
+		LeftElbow /= rhs;
+		LeftWrist /= rhs;
+		LeftHand /= rhs;
+		RightShoulder /= rhs;
+		RightElbow /= rhs;
+		RightWrist /= rhs;
+		RightHand /= rhs;
+
+		return *this; // return the result by reference
+	}
+
+	// friends defined inside class body are inline and are hidden from non-ADL lookup
+	friend FCustomKinectMeasure operator+(FCustomKinectMeasure lhs,			// passing lhs by value helps optimize chained a+b+c
+		const float& rhs)									// otherwise, both parameters may be const references
+	{
+		lhs /= rhs; // reuse compound assignment
+		return lhs; // return the result by value (uses move constructor)
+	}
+
 };
 
 
