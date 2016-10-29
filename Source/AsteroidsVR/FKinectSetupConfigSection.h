@@ -33,7 +33,7 @@ struct ASTEROIDSVR_API FKinectSetupConfigSection
 	FKinectSetupConfigSection()
 	{
 		MeasureText = FText::GetEmpty();
-		MeasureDuration = 3.0f;
+		MeasureDuration = .30f;
 		ShowProgressBar = false;
 		MeasureType = EKinectMeasurePoseEnum::Null;
 	}
@@ -41,7 +41,7 @@ struct ASTEROIDSVR_API FKinectSetupConfigSection
 	FKinectSetupConfigSection(FText text) : FKinectSetupConfigSection()
 	{
 		MeasureText = text;
-		MeasureDuration = 2.0f;
+		MeasureDuration = .20f;
 	}
 
 
