@@ -41,8 +41,13 @@ void UKinectSetupComponent::NotePose(FCustomKinectMeasure measure, EKinectMeasur
 
 void UKinectSetupComponent::UpdateGamePose(FCustomKinectMeasure measure)
 {
+	LastMeasuredRightHandDirection = measure.GetRightHandDirection();
+	LastMeasuredRightHandDirection.Normalize();
+	LastMeasuredRightHandDirection *= RightHandHelper.MeanLength;
+
+
+	RightHand = RightHandHelper.GetDistance(LastMeasuredRightHandDirection);
 	LeftHand = LeftHandHelper.GetDistance(measure.GetLeftHandDirection());
-	RightHand = RightHandHelper.GetDistance(measure.GetRightHandDirection());
 
 }
 

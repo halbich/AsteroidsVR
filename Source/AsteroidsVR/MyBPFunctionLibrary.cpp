@@ -55,3 +55,12 @@ TArray<FKinectSetupConfigSection> UMyBPFunctionLibrary::GetDefaultKinectConfigSe
 
 	return result;
 }
+
+void UMyBPFunctionLibrary::DebugShowHand(FVector origin, FRotator rotator, UPARAM(ref)FHandConfigHelper& hand, UWorld* world)
+{
+	if (!world)
+		return;
+
+	//UKismetSystemLibrary::DrawDebugArrow
+
+}

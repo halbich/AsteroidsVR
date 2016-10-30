@@ -4,6 +4,7 @@
 
 #include "FCustomKinectMeasure.h"
 #include "FKinectSetupConfigSection.h"
+#include "FHandConfigHelper.h"
 #include "MyBPFunctionLibrary.generated.h"
 
 /**
@@ -26,6 +27,8 @@ class ASTEROIDSVR_API UMyBPFunctionLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AsteroidsBPLibrary")
 		static TArray<FKinectSetupConfigSection> GetDefaultKinectConfigSetup();
 
+	UFUNCTION(BlueprintCallable, Category = "AsteroidsBPLibrary")
+		static void DebugShowHand(FVector origin, FRotator rotator, UPARAM(ref)FHandConfigHelper& hand, UWorld* world);
 
 private:
 

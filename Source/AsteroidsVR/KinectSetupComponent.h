@@ -53,9 +53,14 @@ private:
 	UPROPERTY()
 		FCustomKinectMeasure FinalNeutralPose;
 
-	UPROPERTY()
+public:
+	UPROPERTY(BlueprintReadOnly, Category = "Kinect | Setup | HandHelper")
 		FHandConfigHelper RightHandHelper;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Kinect | Setup | HandHelper")
+		FVector LastMeasuredRightHandDirection;
 
 	UPROPERTY()
 		FHandConfigHelper LeftHandHelper;
+
 };
