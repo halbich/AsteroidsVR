@@ -94,11 +94,15 @@ private:
 	/** Current roll speed */
 	float CurrentRollSpeed;
 
-	bool UseKinect;
 
 	UKinectSetupComponent* currentKinectConfig;
 
 protected:
+	UPROPERTY(Category = Plane, BlueprintReadOnly)
+		bool UseKinect;
+
+	UPROPERTY(Category = Plane, BlueprintReadWrite)
+		bool ControlError;
 
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
 		FVector2D LeftControl;
@@ -115,7 +119,7 @@ public:
 	FORCEINLINE class UCameraComponent* GetCamera() const { return Camera; }
 
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
-		void SetNewUseKinect(bool useKinect);
+		void SetNewUseKinect(bool newUseKinect);
 
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void RegisterSetupComponent(UKinectSetupComponent* kinectConfig);

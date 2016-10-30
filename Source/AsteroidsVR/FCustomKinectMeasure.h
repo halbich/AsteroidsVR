@@ -54,7 +54,6 @@ struct ASTEROIDSVR_API FCustomKinectMeasure
 	UPROPERTY(BlueprintReadWrite, Category = "Kinect | Measures")
 		FVector RightHand;
 
-	//UFUNCTION(BlueprintCallable, Category = "Kinect | Measures")
 	void UpdateValue(FVector value, EKinectMeasureEnum type);
 
 	FCustomKinectMeasure()

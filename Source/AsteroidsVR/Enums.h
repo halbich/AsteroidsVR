@@ -31,5 +31,6 @@ enum class EKinectMeasurePoseEnum : uint8
 	Bottom			UMETA(DisplayName = "Bottom"),
 	Right			UMETA(DisplayName = "Right"),
 	Left			UMETA(DisplayName = "Left"),
+	Game			UMETA(DisplayName = "Game")
 
 };

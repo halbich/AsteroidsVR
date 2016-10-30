@@ -35,3 +35,9 @@ void UKinectSetupComponent::NotePose(FCustomKinectMeasure measure, EKinectMeasur
 }
 
 
+void UKinectSetupComponent::UpdateGamePose(FCustomKinectMeasure measure)
+{
+	LeftHand = FVector2D(1, 0);
+	RightHand = FVector2D(-1, -1);
+
+}

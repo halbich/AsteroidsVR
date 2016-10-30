@@ -24,9 +24,25 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Kinect | Setup")
 		void NotePose(FCustomKinectMeasure measure, EKinectMeasurePoseEnum type);
 
+	UPROPERTY()
+		FVector2D LeftHand;
 
+	UPROPERTY()
+		FVector2D RightHand;
+
+	UFUNCTION(BlueprintCallable, Category = "Kinect | Setup")
+		void UpdateGamePose(FCustomKinectMeasure measure);
 private:
 
-	FCustomKinectMeasure PoseFront;
+	UPROPERTY()
+		FCustomKinectMeasure PoseFront;
+	UPROPERTY()
+		FCustomKinectMeasure PoseTop;
+	UPROPERTY()
+		FCustomKinectMeasure PoseBottom;
+	UPROPERTY()
+		FCustomKinectMeasure PoseRight;
+	UPROPERTY()
+		FCustomKinectMeasure PoseLeft;
 
 };

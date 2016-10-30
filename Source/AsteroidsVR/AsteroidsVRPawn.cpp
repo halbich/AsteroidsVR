@@ -53,30 +53,46 @@ AAsteroidsVRPawn::AAsteroidsVRPawn()
 
 void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 {
+
+	if (ControlError)
+	{
+		Super::Tick(DeltaSeconds);
+		return;
+	}
+
+	if (UseKinect && currentKinectConfig)
+	{
+		LeftControl = currentKinectConfig->LeftHand;
+		RightControl = currentKinectConfig->RightHand;
+	}
+
+	auto left = LeftControl;
+	auto right = RightControl;
+
 	auto NewForwardSpeed = CurrentForwardSpeed;
 
-	auto isRoll = LeftControl.Y * RightControl.Y < 0;
+	auto isRoll = left.Y * right.Y < 0;
 
 	if (!isRoll)
 	{
-		CurrentPitchSpeed = (LeftControl.Y + RightControl.Y) *0.5f;
+		CurrentPitchSpeed = (left.Y + right.Y) *0.5f;
 	}
 	else
 	{
-		CurrentRollSpeed = (LeftControl.Y + -1.0f*RightControl.Y) * 0.5f;
+		CurrentRollSpeed = (left.Y + -1.0f*right.Y) * 0.5f;
 	}
 
 
-	auto isBrake = LeftControl.X * RightControl.X < 0;
+	auto isBrake = left.X * right.X < 0;
 
 	if (!isBrake)
 	{
 		NewForwardSpeed += ContinualAcceleration * DeltaSeconds;
-		CurrentYawSpeed = (LeftControl.X + RightControl.X) *0.5f;
+		CurrentYawSpeed = (left.X + right.X) *0.5f;
 	}
 	else
 	{
-		NewForwardSpeed += (LeftControl.X + -1.0f*RightControl.X) * 0.5f * BrakeSpeed * DeltaSeconds;
+		NewForwardSpeed += (left.X + -1.0f*right.X) * 0.5f * BrakeSpeed * DeltaSeconds;
 	}
 
 	CurrentForwardSpeed = FMath::Clamp(NewForwardSpeed, MinSpeed, MaxSpeed);
@@ -161,13 +177,13 @@ void AAsteroidsVRPawn::RightRight(float Val)
 	RightControl.X = Val;
 }
 
-void AAsteroidsVRPawn::SetNewUseKinect(bool useKinect)
+void AAsteroidsVRPawn::SetNewUseKinect(bool newUseKinect)
 {
-	UseKinect = useKinect;
+	UseKinect = newUseKinect;
 
 	currentKinectConfig = nullptr;
 
-	if (!useKinect)
+	if (!UseKinect)
 		return;
 
 	auto pc = UGameplayStatics::GetPlayerController(GetWorld(), 0);
