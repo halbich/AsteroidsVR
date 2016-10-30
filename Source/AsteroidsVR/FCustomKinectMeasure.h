@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "FCustomKinectMeasure.Generated.h"
+#include "FCustomKinectMeasure.generated.h"
 
 
 
@@ -76,18 +76,18 @@ struct ASTEROIDSVR_API FCustomKinectMeasure
 	FCustomKinectMeasure& operator+=(const FCustomKinectMeasure& rhs)		// compound assignment (does not need to be a member,
 	{																		// but often is, to modify the private members)
 
-		BaseOfSpine = rhs.BaseOfSpine;
-		MiddlefSpine = rhs.MiddlefSpine;
-		Neck = rhs.Neck;
-		Head = rhs.Head;
-		LeftShoulder = rhs.LeftShoulder;
-		LeftElbow = rhs.LeftElbow;
-		LeftWrist = rhs.LeftWrist;
-		LeftHand = rhs.LeftHand;
-		RightShoulder = rhs.RightShoulder;
-		RightElbow = rhs.RightElbow;
-		RightWrist = rhs.RightWrist;
-		RightHand = rhs.RightHand;
+		BaseOfSpine += rhs.BaseOfSpine;
+		MiddlefSpine += rhs.MiddlefSpine;
+		Neck += rhs.Neck;
+		Head += rhs.Head;
+		LeftShoulder += rhs.LeftShoulder;
+		LeftElbow += rhs.LeftElbow;
+		LeftWrist += rhs.LeftWrist;
+		LeftHand += rhs.LeftHand;
+		RightShoulder += rhs.RightShoulder;
+		RightElbow += rhs.RightElbow;
+		RightWrist += rhs.RightWrist;
+		RightHand += rhs.RightHand;
 
 		return *this; // return the result by reference
 	}
@@ -125,6 +125,39 @@ struct ASTEROIDSVR_API FCustomKinectMeasure
 	{
 		lhs /= rhs; // reuse compound assignment
 		return lhs; // return the result by value (uses move constructor)
+	}
+
+	FVector GetRightHandDirection()
+	{
+		return getTotalDirection(RightShoulder, RightElbow, RightWrist, RightHand);
+	}
+
+	FVector GetLeftHandDirection()
+	{
+		return getTotalDirection(LeftShoulder, LeftElbow, LeftWrist, LeftHand);
+	}
+
+
+private:
+	FORCEINLINE FVector getTotalDirection(const FVector& shoulder,
+		const FVector& elbow,
+		const FVector& wrist,
+		const FVector& hand)
+	{
+		auto v1 = elbow - shoulder;
+		auto v2 = wrist - shoulder;
+		auto v3 = hand - shoulder;
+
+		v1.Normalize();
+		v2.Normalize();
+		v3.Normalize();
+
+		auto result = v1 + v2 + v3;
+		result.Normalize();
+
+		auto handDist = FVector::Dist(hand, shoulder);
+		return result * handDist;
+
 	}
 
 };

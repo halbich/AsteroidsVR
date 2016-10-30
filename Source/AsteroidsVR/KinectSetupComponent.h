@@ -5,6 +5,7 @@
 #include "Enums.h"
 #include "Components/ActorComponent.h"
 #include "FCustomKinectMeasure.h"
+#include "FHandConfigHelper.h"
 #include "KinectSetupComponent.generated.h"
 
 
@@ -23,6 +24,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Kinect | Setup")
 		void NotePose(FCustomKinectMeasure measure, EKinectMeasurePoseEnum type);
+
+	UFUNCTION(BlueprintCallable, Category = "Kinect | Setup")
+		void FinalizeConfiguration();
 
 	UPROPERTY()
 		FVector2D LeftHand;
@@ -45,4 +49,13 @@ private:
 	UPROPERTY()
 		FCustomKinectMeasure PoseLeft;
 
+
+	UPROPERTY()
+		FCustomKinectMeasure FinalNeutralPose;
+
+	UPROPERTY()
+		FHandConfigHelper RightHandHelper;
+
+	UPROPERTY()
+		FHandConfigHelper LeftHandHelper;
 };

@@ -30,6 +30,10 @@ void UKinectSetupComponent::NotePose(FCustomKinectMeasure measure, EKinectMeasur
 	switch (type) {
 
 	case EKinectMeasurePoseEnum::Front: PoseFront = measure; break;
+	case EKinectMeasurePoseEnum::Top: PoseTop = measure; break;
+	case EKinectMeasurePoseEnum::Bottom: PoseBottom = measure; break;
+	case EKinectMeasurePoseEnum::Right: PoseRight = measure; break;
+	case EKinectMeasurePoseEnum::Left: PoseLeft = measure; break;
 	}
 
 }
@@ -37,7 +41,33 @@ void UKinectSetupComponent::NotePose(FCustomKinectMeasure measure, EKinectMeasur
 
 void UKinectSetupComponent::UpdateGamePose(FCustomKinectMeasure measure)
 {
-	LeftHand = FVector2D(1, 0);
-	RightHand = FVector2D(-1, -1);
+	LeftHand = LeftHandHelper.GetDistance(measure.GetLeftHandDirection());
+	RightHand = RightHandHelper.GetDistance(measure.GetRightHandDirection());
+
+}
+
+void UKinectSetupComponent::FinalizeConfiguration()
+{
+
+	print(TEXT("finalizuji"));
+
+	FinalNeutralPose = (PoseFront + PoseTop + PoseBottom + PoseRight + PoseLeft);
+	FinalNeutralPose /= 5;
+
+	RightHandHelper = FHandConfigHelper(
+		PoseFront.GetRightHandDirection(),
+		PoseTop.GetRightHandDirection(),
+		PoseBottom.GetRightHandDirection(),
+		PoseRight.GetRightHandDirection(),
+		PoseLeft.GetRightHandDirection()
+	);
+
+	LeftHandHelper = FHandConfigHelper(
+		PoseFront.GetLeftHandDirection(),
+		PoseTop.GetLeftHandDirection(),
+		PoseBottom.GetLeftHandDirection(),
+		PoseLeft.GetLeftHandDirection(),
+		PoseLeft.GetLeftHandDirection()
+	);
 
 }

@@ -23,16 +23,12 @@ FCustomKinectMeasure UMyBPFunctionLibrary::GetEmptyMeasure() {
 FCustomKinectMeasure UMyBPFunctionLibrary::GetMostCenteredPosition(UPARAM(ref) TArray<FCustomKinectMeasure>& measures)
 {
 	FCustomKinectMeasure measure;
-
-	for (FCustomKinectMeasure m : measures)
+	for (FCustomKinectMeasure& m : measures)
 	{
 		measure += m;
 	}
-
 	measure /= measures.Num();
-
 	return measure;
-
 }
 
 
