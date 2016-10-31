@@ -114,7 +114,7 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 	CurrentRollSpeed *= 0.5f;
 
 	// Rotate plane
-	//AddActorLocalRotation(DeltaRotation);
+	AddActorLocalRotation(DeltaRotation);
 
 	// Call any parent class Tick implementation
 	Super::Tick(DeltaSeconds);
