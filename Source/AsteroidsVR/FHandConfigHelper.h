@@ -2,6 +2,8 @@
 
 #pragma once
 
+#pragma optimize("", off)
+
 #include "FHandConfigHelper.generated.h"
 
 #define SMALL_NUMBER		(1.e-8f)
@@ -16,7 +18,13 @@ struct ASTEROIDSVR_API FEffector
 	{
 		EffectDirection = direction;
 		EffectResult = result;
-		CurrDistFromDir = FVector::Dist(currentDirection, direction);
+		CurrDistFromDir = FMath::RadiansToDegrees(acosf(FVector::DotProduct(currentDirection.GetSafeNormal(), direction.GetSafeNormal())));
+
+		auto ratio = CurrDistFromDir / 180.0f;
+		auto resRatio = FMath::InterpStep(1.0f, -1.0f, ratio, 20);
+		auto rr = FMath::Lerp(1.0f, -1.0f, ratio);
+
+		EffectResult = result * rr;
 	}
 };
 
@@ -110,26 +118,26 @@ struct ASTEROIDSVR_API FHandConfigHelper
 		Center *= MeanLength;
 
 		ProjectionPlane = FPlane(FVector::ZeroVector, Center);
-		
+
 		Up = up;
 		Up.Normalize();
 		Up *= MeanLength;
-		UpProjection = FVector::PointPlaneProject(Up, ProjectionPlane);
+		UpProjection = FVector::VectorPlaneProject(Up, Center.GetSafeNormal());
 
 		Down = down;
 		Down.Normalize();
 		Down *= MeanLength;
-		DownProjection = FVector::PointPlaneProject(Down, ProjectionPlane);
+		DownProjection = FVector::VectorPlaneProject(Down, Center.GetSafeNormal());
 
 		Right = right;
 		Right.Normalize();
 		Right *= MeanLength;
-		RightProjection = FVector::PointPlaneProject(Right, ProjectionPlane);
+		RightProjection = FVector::VectorPlaneProject(Right, Center.GetSafeNormal());
 
 		Left = left;
 		Left.Normalize();
 		Left *= MeanLength;
-		LeftProjection = FVector::PointPlaneProject(Left, ProjectionPlane);
+		LeftProjection = FVector::VectorPlaneProject(Left, Center.GetSafeNormal());
 
 
 	}
@@ -168,62 +176,34 @@ private:
 	}
 
 public:
+
+
+
 	FVector2D GetDistance(const FVector& d)
 	{
+
 
 		auto _d = d;
 		_d.Normalize();
 		_d *= MeanLength;
-
-
-		FEffector c(Center, FVector2D(0, 0), _d);
-		FEffector top(Up, FVector2D(0, 1), _d);
-		FEffector right(Right, FVector2D(1, 0), _d);
-		FEffector bottom(Down, FVector2D(0, -1), _d);
-		FEffector left(Left, FVector2D(-1, 0), _d);
-
-
-		auto isTopCls = top.CurrDistFromDir < right.CurrDistFromDir;
-		auto closest = isTopCls ? top : right;
-		auto closest2 = isTopCls ? right : top;
-
-		CmpEffs(closest, closest2, bottom);
-		CmpEffs(closest, closest2, left);
-
-
-		Closest = closest.EffectDirection;
-		Closest2 = closest2.EffectDirection;
-
-		auto distance1 = closest.CurrDistFromDir;
-		auto distance2 = closest2.CurrDistFromDir;
-
-		auto p1 = FVector::VectorPlaneProject(closest.EffectDirection, Center.GetSafeNormal());
-		auto p2 = FVector::VectorPlaneProject(closest2.EffectDirection, Center.GetSafeNormal());
 		auto pn = FVector::VectorPlaneProject(_d, Center.GetSafeNormal());
 
-		auto d1 = FVector::Dist(pn, p1);
-		auto d2 = FVector::Dist(pn, p2);
-		auto dt = FMath::Max(d1 + d2, SMALL_NUMBER);
 
-		auto k1 = (1 - (d1 / dt));
-		auto k2 = (1 - (d2 / dt));
-
-
-		FVector2D res;
-		res += k1* closest.EffectResult;
-		res += k2 * closest2.EffectResult;
+		FEffector top(UpProjection, FVector2D(0, 1), pn);
+		FEffector right(RightProjection, FVector2D(1, 0), pn);
+		FEffector bottom(DownProjection, FVector2D(0, -1), pn);
+		FEffector left(LeftProjection, FVector2D(-1, 0), pn);
 
 
 
-		Closest = p1;
-		Closest2 = pn;
-
+		FVector2D res = top.EffectResult + right.EffectResult + bottom.EffectResult + left.EffectResult;
 
 		if (res.Size() > 1)
 			res.Normalize();
 
+		print(*res.ToString());
 		return res;
 
 	}
-
 };
+#pragma optimize("", on)

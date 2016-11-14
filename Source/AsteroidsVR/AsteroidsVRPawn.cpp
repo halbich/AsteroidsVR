@@ -53,7 +53,7 @@ AAsteroidsVRPawn::AAsteroidsVRPawn()
 
 void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 {
-
+	
 	if (ControlError)
 	{
 		Super::Tick(DeltaSeconds);
