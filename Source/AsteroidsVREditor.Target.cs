@@ -21,5 +21,6 @@ public class AsteroidsVREditorTarget : TargetRules
 		)
 	{
 		OutExtraModuleNames.Add("AsteroidsVR");
-	}
+        OutExtraModuleNames.Add("KinectModule");
+    }
 }

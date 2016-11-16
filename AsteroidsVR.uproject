@@ -4,8 +4,16 @@
 	"Category": "",
 	"Description": "",
 	"Modules": [
-		{
-			"Name": "AsteroidsVR",
+    {
+      "Name": "AsteroidsVR",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "Engine"
+      ]
+    },
+    {
+			"Name": "KinectModule",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
