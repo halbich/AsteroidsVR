@@ -64,9 +64,6 @@ struct ASTEROIDSVR_API FHandConfigHelper
 	UPROPERTY(BlueprintReadOnly, Category = "Kinect | Setup | HandConfig")
 		FVector LeftProjection;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Kinect | Setup | HandConfig")
-		FPlane ProjectionPlane;
-
 	UPROPERTY()
 		float MeanLength;
 
@@ -98,8 +95,6 @@ struct ASTEROIDSVR_API FHandConfigHelper
 		RightProjection = FVector::ZeroVector;
 		LeftProjection = FVector::ZeroVector;
 
-		ProjectionPlane = FPlane();
-
 		MeanLength = 0;
 		Closest = FVector::ZeroVector;
 		Closest2 = FVector::ZeroVector;
@@ -116,8 +111,6 @@ struct ASTEROIDSVR_API FHandConfigHelper
 		Center = center;
 		Center.Normalize();
 		Center *= MeanLength;
-
-		ProjectionPlane = FPlane(FVector::ZeroVector, Center);
 
 		Up = up;
 		Up.Normalize();
@@ -143,65 +136,21 @@ struct ASTEROIDSVR_API FHandConfigHelper
 	}
 
 
-
-
-
-
-
-
-private:
-
-	// D smìr, T cíl, dc vzdálenost smìru od støedu, tc vzdálenost cíle od støedu
-	FORCEINLINE float getCoef(const FVector& D, const FVector& T, const float& dc, const float& tc)
-	{
-		auto d = FVector::Dist(D, T);		// vzdálenost smìru od cíle
-		auto dMin = dc <= tc ? FMath::Min(d, tc) : 0;		// vzdálenost omezíme na nejvýše vzdálenost od støedu
-		return 1 - (dMin / tc);			// s jakým koeficientem jsem nahoøe
-
-	}
-
-
-	FORCEINLINE void CmpEffs(FEffector& closest, FEffector& closest2, FEffector& test)
-	{
-		if (test.CurrDistFromDir < closest.CurrDistFromDir)	// testovaný je blíže než nejmenší
-		{
-			closest2 = closest;		// propaguji 2. místo
-			closest = test;
-		}
-		else
-		{
-			if (test.CurrDistFromDir < closest2.CurrDistFromDir)
-				closest2 = test;
-		}
-	}
-
-public:
-
-
-
 	FVector2D GetDistance(const FVector& d)
 	{
+		auto pn = d; //FVector::VectorPlaneProject(d, Center.GetSafeNormal());
 
+		Closest = pn;
 
-		auto _d = d;
-		_d.Normalize();
-		_d *= MeanLength;
-		auto pn = FVector::VectorPlaneProject(_d, Center.GetSafeNormal());
-
-
-		FEffector top(UpProjection, FVector2D(0, 1), pn);
-		FEffector right(RightProjection, FVector2D(1, 0), pn);
-		FEffector bottom(DownProjection, FVector2D(0, -1), pn);
-		FEffector left(LeftProjection, FVector2D(-1, 0), pn);
-
-
+		FEffector top(Up/*Projection*/, FVector2D(0, 1), pn);
+		FEffector bottom(Down/*Projection*/, FVector2D(0, -1), pn);
+		FEffector right(Right/*Projection*/, FVector2D(1, 0), pn);
+		FEffector left(Left/*Projection*/, FVector2D(-1, 0), pn);
 
 		FVector2D res = top.EffectResult + right.EffectResult + bottom.EffectResult + left.EffectResult;
 
-		if (res.Size() > 1)
-			res.Normalize();
-
-		print(*res.ToString());
+		res = res.ClampAxes(-1, 1);
+	
 		return res;
 
 	}

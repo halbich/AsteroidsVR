@@ -45,8 +45,6 @@ void UKinectSetupComponent::UpdateGamePose(FCustomKinectMeasure measure)
 	LastMeasuredRightHandDirection = measure.GetRightHandDirection();
 	LastMeasuredRightHandDirection.Normalize();
 	LastMeasuredRightHandDirection *= RightHandHelper.MeanLength;
-
-
 	RightHand = RightHandHelper.GetDistance(LastMeasuredRightHandDirection);
 
 
@@ -57,48 +55,9 @@ void UKinectSetupComponent::UpdateGamePose(FCustomKinectMeasure measure)
 
 }
 
-void UKinectSetupComponent::UpdateDummyGamePose(FCustomKinectMeasure measure)
-{
-
-	float realtimeSeconds = UGameplayStatics::GetRealTimeSeconds(GetWorld());
-
-	auto fr = FRotator(realtimeSeconds * 2);
-
-	auto res = FVector(100, 0, -0);
-
-
-	setMeasure(measure, FVector(100, 0, 150));
-
-	UpdateGamePose(measure);
-
-
-}
 
 void UKinectSetupComponent::FinalizeConfiguration()
 {
-
-	if (true) {
-		PoseFront = FCustomKinectMeasure();
-		setMeasure(PoseFront, FVector(150, 0, 0));
-
-		PoseTop = FCustomKinectMeasure();
-		setMeasure(PoseTop, FVector(100, -24, 100));
-
-		PoseBottom = FCustomKinectMeasure();
-		setMeasure(PoseBottom, FVector(50, 15, -75));
-
-		PoseRight = FCustomKinectMeasure();
-		setMeasure(PoseRight, FVector(100, 100, 0));
-
-		PoseLeft = FCustomKinectMeasure();
-		setMeasure(PoseLeft, FVector(100, -100, 0));
-
-	}
-
-
-
-	print(TEXT("finalizuji"));
-
 	FinalNeutralPose = (PoseFront + PoseTop + PoseBottom + PoseRight + PoseLeft);
 	FinalNeutralPose /= 5;
 
@@ -114,7 +73,7 @@ void UKinectSetupComponent::FinalizeConfiguration()
 		PoseFront.GetLeftHandDirection(),
 		PoseTop.GetLeftHandDirection(),
 		PoseBottom.GetLeftHandDirection(),
-		PoseLeft.GetLeftHandDirection(),
+		PoseRight.GetLeftHandDirection(),
 		PoseLeft.GetLeftHandDirection()
 	);
 

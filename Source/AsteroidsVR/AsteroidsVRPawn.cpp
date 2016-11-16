@@ -66,8 +66,16 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 		RightControl = currentKinectConfig->RightHand;
 	}
 
+	if (UseControlSteps)
+	{
+		LeftControl = GridSnap(LeftControl);
+		RightControl = GridSnap(RightControl);
+	}
+
 	auto left = LeftControl;
 	auto right = RightControl;
+
+
 
 	auto NewForwardSpeed = CurrentForwardSpeed;
 
@@ -82,6 +90,7 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 		CurrentRollSpeed = (left.Y + -1.0f*right.Y) * 0.5f;
 	}
 
+	
 
 	auto isBrake = left.X * right.X < 0;
 
@@ -119,10 +128,6 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 	// Call any parent class Tick implementation
 	Super::Tick(DeltaSeconds);
 
-	/*print(*FString::SanitizeFloat(CurrentYawSpeed));
-	print(*FString::SanitizeFloat(CurrentPitchSpeed));
-	print(*FString::SanitizeFloat(CurrentRollSpeed));
-	print(TEXT(""));*/
 }
 
 void AAsteroidsVRPawn::NotifyHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
@@ -203,4 +208,15 @@ void AAsteroidsVRPawn::RegisterSetupComponent(UKinectSetupComponent* kinectConfi
 {
 
 
+}
+
+void AAsteroidsVRPawn::BeginPlay()
+{
+	if (InvertY)
+	{
+		PitchSpeed *= -1;
+	//	RollSpeed *= -1;
+	}
+
+	Super::BeginPlay();
 }

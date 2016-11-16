@@ -148,11 +148,7 @@ private:
 		auto v2 = wrist - shoulder;
 		auto v3 = hand - shoulder;
 
-		v1.Normalize();
-		v2.Normalize();
-		v3.Normalize();
-
-		auto result = v1 + v2 + v3;
+		auto result = (v1 + v2 + v3) / 3.0f;
 		result.Normalize();
 
 		auto handDist = FVector::Dist(hand, shoulder);

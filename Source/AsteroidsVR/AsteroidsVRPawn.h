@@ -80,7 +80,17 @@ private:
 	UPROPERTY(Category = Rot, EditAnywhere)
 		float YawSpeed;
 
+	/** Should the controller steps controls? */
+	UPROPERTY(Category = Misc, EditAnywhere)
+		bool UseControlSteps;
 
+	/** How much is result stepped */
+	UPROPERTY(Category = Misc, EditAnywhere, meta = (ClampMin = 1, UIMin = 1, ClampMax = 20, UIMax = 20, EditCondition = UseControlSteps))
+		int32 ControlSteps;
+
+	/** Should the controller steps controls? */
+	UPROPERTY(Category = Misc, EditAnywhere)
+		bool InvertY;
 
 	/** Current forward speed */
 	float CurrentForwardSpeed;
@@ -96,6 +106,8 @@ private:
 
 
 	UKinectSetupComponent* currentKinectConfig;
+
+	void BeginPlay() override;
 
 protected:
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
@@ -120,7 +132,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void SetNewUseKinect(bool newUseKinect);
-
+		
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void RegisterSetupComponent(UKinectSetupComponent* kinectConfig);
+
+private:
+	FORCEINLINE FVector2D GridSnap(const FVector2D& vect) const
+	{
+		const float GridSz = 1.0f / ControlSteps;
+
+		return FVector2D(FMath::GridSnap(vect.X, GridSz), FMath::GridSnap(vect.Y, GridSz));
+	}
 };
