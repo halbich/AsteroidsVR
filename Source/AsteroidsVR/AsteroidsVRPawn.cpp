@@ -10,7 +10,7 @@ AAsteroidsVRPawn::AAsteroidsVRPawn()
 	{
 		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> PlaneMesh;
 		FConstructorStatics()
-			: PlaneMesh(TEXT("StaticMesh'/Game/Models/viperMkII.viperMkII'"))
+			: PlaneMesh(TEXT("StaticMesh'/Game/Geometry/Viper/viperMkII.viperMkII'"))
 		{
 		}
 	};
