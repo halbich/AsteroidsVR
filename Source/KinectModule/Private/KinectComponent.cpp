@@ -36,9 +36,8 @@ void UKinectComponent::BeginPlay()
 
 	for (uint8 i = 0; i < BODY_COUNT; i++)
 	{
-		trackedBodies.Add((EKinectBody)i, NewObject<UKinectBodyData>());
+		trackedBodies.Add((EKinectBody)i, NewObject<UKinectBodyData>(this));
 	}
-
 
 	HRESULT hr;
 
