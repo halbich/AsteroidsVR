@@ -8,7 +8,7 @@
 
 
 USTRUCT()
-struct FJointValueStruct{
+struct FJointValueStruct {
 
 	GENERATED_BODY();
 
@@ -26,20 +26,20 @@ struct FJointValueStruct{
 };
 
 /**
- * 
+ *
  */
 UCLASS()
 class KINECTMODULE_API UKinectBodyData : public UObject
 {
 	GENERATED_BODY()
-	
+
 public:
 
 	UKinectBodyData();
 
 	UPROPERTY()
 		bool IsTracked;
-	
+
 	UPROPERTY()
 		EKinectHandState LeftHandState;
 
@@ -52,4 +52,19 @@ public:
 	void UpdateJoint(EKinectJointType Joint, FVector Location, EKinectJointTrackingState TrackingState);
 
 	FVector GetJointLocation(EKinectJointType Joint, EKinectJointTrackingState& TrackingState);
+
+	int32 GetCenteringContant(bool& IsRelevant);
+
+private:
+
+	FORCEINLINE FVector getRelevantCenteringJoint(EKinectJointType Joint, int32& relevants) {
+
+		EKinectJointTrackingState trackState;
+		auto res = GetJointLocation(Joint, trackState);
+
+		if (trackState != EKinectJointTrackingState::NotTracked)
+			++relevants;
+
+		return res;
+	}
 };

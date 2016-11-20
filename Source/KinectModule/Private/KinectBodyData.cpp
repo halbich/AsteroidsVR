@@ -26,4 +26,24 @@ FVector UKinectBodyData::GetJointLocation(EKinectJointType Joint, EKinectJointTr
 	TrackingState = val.TrackingState;
 	return val.Location;
 }
+
+
+int32 UKinectBodyData::GetCenteringContant(bool& IsRelevant)
+{
+	FVector bodyPosition;
+	int32 relevants = 0;
+
+	bodyPosition += getRelevantCenteringJoint(EKinectJointType::Head, relevants);
+	bodyPosition += getRelevantCenteringJoint(EKinectJointType::Neck, relevants);
+	bodyPosition += getRelevantCenteringJoint(EKinectJointType::SpineMid, relevants);
+	bodyPosition += getRelevantCenteringJoint(EKinectJointType::SpineBase, relevants);
+
+	IsRelevant = relevants != 0;
+
+	if (IsRelevant)
+		bodyPosition /= relevants;
+
+	return bodyPosition.Y;
+}
+
 #pragma optimize("",on)

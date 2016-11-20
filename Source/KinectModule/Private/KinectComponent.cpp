@@ -257,7 +257,7 @@ void UKinectComponent::processBodies(int nBodyCount, IBody** ppBodies)
 			for (int j = 0; j < _countof(joints); ++j)
 			{
 				auto joint = joints[j];
-				
+
 				data->UpdateJoint((EKinectJointType)joint.JointType, getFromJoint(joint), (EKinectJointTrackingState)joint.TrackingState);
 			}
 
@@ -297,6 +297,34 @@ FVector UKinectComponent::GetJointLocation(EKinectBody Body, EKinectJointType Jo
 	}
 
 	return data->GetJointLocation(Joint, TrackingState);
+}
+
+EKinectBody UKinectComponent::GetCenteredBody(bool& IsTracked)
+{
+	IsTracked = false;
+	EKinectBody centered = EKinectBody::Body0;
+
+	int32 lastCenteredKonstant = 1024 * 1024;
+
+	for (auto bodyPair : trackedBodies)
+	{
+		auto bodyVal = bodyPair.Value;
+		if (!bodyVal || !bodyVal->IsTracked)
+			continue;
+
+
+		bool isRelevant = false;
+		auto currentConstant = bodyVal->GetCenteringContant(isRelevant);
+
+		if (isRelevant && currentConstant < lastCenteredKonstant)
+		{
+			lastCenteredKonstant = currentConstant;
+			centered = bodyPair.Key;
+			IsTracked = true;
+		}
+	}
+
+	return centered;
 }
 
 #pragma optimize("", off)

@@ -66,6 +66,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Kinect")
 		FVector GetJointLocation(EKinectBody Body, EKinectJointType Joint, EKinectJointTrackingState& TrackingState);
 
+	UFUNCTION(BlueprintCallable, Category = "Kinect")
+		EKinectBody GetCenteredBody(bool& IsTracked);
+
 private:
 
 	// Current Kinect
