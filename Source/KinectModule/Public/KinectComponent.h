@@ -13,7 +13,7 @@
 #include "Kinect.h"
 #include "HideWindowsPlatformTypes.h"
 
-#include "Enums.h"
+#include "KinectEnums.h"
 #include "KinectBodyData.h"
 
 #include "KinectComponent.generated.h"
@@ -51,7 +51,10 @@ public:
 
 
 
-	UPROPERTY(BlueprintReadOnly, Category = "Kinect")
+	UFUNCTION(BlueprintCallable, Category = "Kinect")
+		bool IsKinectAwake();
+
+	UPROPERTY()
 		bool IsKinectAviable;
 
 	UFUNCTION(BlueprintCallable, Category = "Kinect")

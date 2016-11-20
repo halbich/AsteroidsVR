@@ -327,4 +327,9 @@ EKinectBody UKinectComponent::GetCenteredBody(bool& IsTracked)
 	return centered;
 }
 
+bool UKinectComponent::IsKinectAwake()
+{
+	return IsKinectAviable;
+}
+
 #pragma optimize("", off)

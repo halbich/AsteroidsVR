@@ -5,22 +5,22 @@
 
 
 
-void FCustomKinectMeasure::UpdateValue(FVector value, EKinectMeasureEnum type)
+void FCustomKinectMeasure::UpdateValue(FVector value, EKinectJointType type)
 {
 	switch (type)
 	{
-	case EKinectMeasureEnum::BaseOfSpine: {BaseOfSpine = value; break; }
-	case EKinectMeasureEnum::MiddlefSpine: {MiddlefSpine = value; break; }
-	case EKinectMeasureEnum::Neck: {Neck = value; break; }
-	case EKinectMeasureEnum::Head: {Head = value; break; }
-	case EKinectMeasureEnum::LeftShoulder: {LeftShoulder = value; break; }
-	case EKinectMeasureEnum::LeftElbow: {LeftElbow = value; break; }
-	case EKinectMeasureEnum::LeftWrist: {LeftWrist = value; break; }
-	case EKinectMeasureEnum::LeftHand: {LeftHand = value; break; }
-	case EKinectMeasureEnum::RightShoulder: {RightShoulder = value; break; }
-	case EKinectMeasureEnum::RightElbow: {RightElbow = value; break; }
-	case EKinectMeasureEnum::RightWrist: {RightWrist = value; break; }
-	case EKinectMeasureEnum::RightHand: {RightHand = value; break; }
+	case EKinectJointType::SpineBase: {BaseOfSpine = value; break; }
+	case EKinectJointType::SpineMid: {MiddlefSpine = value; break; }
+	case EKinectJointType::Neck: {Neck = value; break; }
+	case EKinectJointType::Head: {Head = value; break; }
+	case EKinectJointType::ShoulderLeft: {LeftShoulder = value; break; }
+	case EKinectJointType::ElbowLeft: {LeftElbow = value; break; }
+	case EKinectJointType::WristLeft: {LeftWrist = value; break; }
+	case EKinectJointType::HandLeft: {LeftHand = value; break; }
+	case EKinectJointType::ShoulderRight: {RightShoulder = value; break; }
+	case EKinectJointType::ElbowRight: {RightElbow = value; break; }
+	case EKinectJointType::WristRight: {RightWrist = value; break; }
+	case EKinectJointType::HandRight: {RightHand = value; break; }
 	}
 
 }

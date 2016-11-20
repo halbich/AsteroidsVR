@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Object.h"
-#include "Enums.h"
+#include "KinectEnums.h"
 #include "KinectBodyData.generated.h"
 
 

@@ -6,6 +6,8 @@ public class AsteroidsVR : ModuleRules
 {
 	public AsteroidsVR(TargetInfo Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
-	}
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "KinectModule" });
+
+        PublicIncludePaths.AddRange(new string[] { "KinectModule/Public" });
+    }
 }

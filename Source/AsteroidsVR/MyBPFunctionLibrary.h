@@ -5,6 +5,7 @@
 #include "FCustomKinectMeasure.h"
 #include "FKinectSetupConfigSection.h"
 #include "FHandConfigHelper.h"
+#include "KinectEnums.h"
 #include "MyBPFunctionLibrary.generated.h"
 
 /**
@@ -16,7 +17,7 @@ class ASTEROIDSVR_API UMyBPFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_UCLASS_BODY()
 
 		UFUNCTION(BlueprintCallable, Category = "AsteroidsBPLibrary")
-		static void UpdateValue(UPARAM(ref) FCustomKinectMeasure& measure, FVector value, EKinectMeasureEnum type);
+		static void UpdateValue(UPARAM(ref) FCustomKinectMeasure& measure, FVector value, EKinectJointType type);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AsteroidsBPLibrary")
 		static FCustomKinectMeasure GetEmptyMeasure();

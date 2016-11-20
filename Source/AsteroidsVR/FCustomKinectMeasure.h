@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "KinectEnums.h"
 #include "FCustomKinectMeasure.generated.h"
 
 
@@ -54,7 +55,7 @@ struct ASTEROIDSVR_API FCustomKinectMeasure
 	UPROPERTY(BlueprintReadWrite, Category = "Kinect | Measures")
 		FVector RightHand;
 
-	void UpdateValue(FVector value, EKinectMeasureEnum type);
+	void UpdateValue(FVector value, EKinectJointType type);
 
 	FCustomKinectMeasure()
 	{
