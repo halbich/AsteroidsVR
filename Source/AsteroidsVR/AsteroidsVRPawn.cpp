@@ -104,9 +104,9 @@ void AAsteroidsVRPawn::Tick(float DeltaSeconds)
 		NewForwardSpeed += (left.X + -1.0f*right.X) * 0.5f * BrakeSpeed * DeltaSeconds;
 	}
 
-	CurrentSpeed = FMath::Clamp(NewForwardSpeed, MinSpeed, MaxSpeed);
+	CurrentForwardSpeed = FMath::Clamp(NewForwardSpeed, MinSpeed, MaxSpeed);
 
-	const FVector LocalMove = FVector(CurrentSpeed * DeltaSeconds, 0.f, 0.f);
+	const FVector LocalMove = FVector(CurrentForwardSpeed * DeltaSeconds, 0.f, 0.f);
 
 	// Move plan forwards (with sweep so we stop when we collide with things)
 	AddActorLocalOffset(LocalMove, true);

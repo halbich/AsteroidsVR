@@ -86,10 +86,52 @@ void UMyBPFunctionLibrary::MapEdgeLoc(UObject* WorldContextObject, APlayerContro
 	OutScreenPosition = CustomClamp(resultPos, innerBorder);
 
 	if (bIsOutScreen) {
-		OutRotationAngleDegrees = FMath::RadiansToDegrees(acosf(FVector2D::DotProduct(FVector2D(0,-1), OutScreenPosition.GetSafeNormal()))) * FMath::Sign(OutScreenPosition.X);
+		OutRotationAngleDegrees = FMath::RadiansToDegrees(acosf(FVector2D::DotProduct(FVector2D(0, -1), OutScreenPosition.GetSafeNormal()))) * FMath::Sign(OutScreenPosition.X);
 	}
 }
 
+
+FVector UMyBPFunctionLibrary::CalculateTargetShootingPosition(const FVector& TargetLocation, const FVector& TargetForward, const float TargetSpeed, const FVector& BaseLocation, const float BaseShootSpeed)
+{
+	FTargetHelper left(TargetLocation, 0, FVector::Dist(TargetLocation, BaseLocation) / BaseShootSpeed);
+
+	auto rightLoc = TargetLocation + left.ProjectileFlyTime * TargetForward * TargetSpeed;
+	FTargetHelper right(rightLoc, left.ProjectileFlyTime, FVector::Dist(rightLoc, BaseLocation) / BaseShootSpeed);
+
+
+	const int32 maxIterations = 20;
+
+	for (size_t i = maxIterations; i > 0; --i)
+	{
+		if (right.IsOverShoot)
+		{
+			auto newHelpLoc = TargetLocation + right.ProjectileFlyTime * TargetForward * TargetSpeed;
+			FTargetHelper newHelp(newHelpLoc, right.ProjectileFlyTime, FVector::Dist(newHelpLoc, BaseLocation) / BaseShootSpeed);
+
+			if (newHelp.IsOverShoot)
+				right = newHelp;
+			else
+			{
+				left = newHelp;
+
+				auto newRight = TargetLocation + left.ProjectileFlyTime * TargetForward * TargetSpeed;
+				right = FTargetHelper(newRight, left.ProjectileFlyTime, FVector::Dist(newRight, BaseLocation) / BaseShootSpeed);
+			}
+		}
+		else
+		{
+			left = right;
+			auto newHelpLoc = TargetLocation + left.ProjectileFlyTime * TargetForward * TargetSpeed;
+			right = FTargetHelper(newHelpLoc, left.ProjectileFlyTime, FVector::Dist(newHelpLoc, BaseLocation) / BaseShootSpeed);
+		}
+	}
+
+	if (!right.IsOverShoot)
+		return right.TargetLocation;
+
+
+	return left.TargetLocation;
+}
 
 
 #pragma optimize("", on)

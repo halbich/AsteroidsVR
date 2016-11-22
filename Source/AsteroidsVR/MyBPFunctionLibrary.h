@@ -8,6 +8,24 @@
 #include "KinectEnums.h"
 #include "MyBPFunctionLibrary.generated.h"
 
+
+struct FTargetHelper
+{
+	FVector TargetLocation;
+	float TargetFlyTime;
+	float ProjectileFlyTime;
+
+	/* ProjectileFlyTime < TargetFlyTime, tedy projektil bude v místì døíve */
+	bool IsOverShoot;
+
+	FTargetHelper(FVector targetLocation, float targetFlyTime, float projectileFlyTime)
+	{
+		TargetLocation = targetLocation;
+		TargetFlyTime = targetFlyTime;
+		ProjectileFlyTime = projectileFlyTime;
+		IsOverShoot = ProjectileFlyTime < TargetFlyTime;
+	}
+};
 /**
  *
  */
@@ -31,6 +49,10 @@ class ASTEROIDSVR_API UMyBPFunctionLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintPure, Category = "AsteroidsBPLibrary|Util", meta = (WorldContext = "WorldContextObject"))
 		static void MapEdgeLoc(UObject* WorldContextObject, APlayerController* Controller, const FVector& ObjectLocation, const float EdgeBorder, FVector2D& OutScreenPosition, float& OutRotationAngleDegrees, bool &bIsOutScreen, bool &bIsOutView);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AsteroidsBPLibrary")
+		static FVector CalculateTargetShootingPosition(const FVector& TargetLocation, const FVector& TargetForward, const float TargetSpeed, const FVector& BaseLocation, const float BaseShootSpeed);
+
 private:
 
 	FORCEINLINE static bool isOutRange(FVector2D& vect, FVector2D& border)

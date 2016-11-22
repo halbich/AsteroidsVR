@@ -92,8 +92,7 @@ private:
 	UPROPERTY(Category = Misc, EditAnywhere)
 		bool InvertY;
 
-	/** Current forward speed */
-	float CurrentForwardSpeed;
+
 
 	/** Current yaw speed */
 	float CurrentYawSpeed;
@@ -123,7 +122,7 @@ protected:
 		FVector2D RightControl;
 
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
-		float CurrentSpeed;
+		float CurrentForwardSpeed;
 
 public:
 	/** Returns PlaneMesh subobject **/
