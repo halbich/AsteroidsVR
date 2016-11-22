@@ -134,6 +134,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void SetNewUseKinect(bool newUseKinect);
+
+	UFUNCTION(BlueprintCallable, Category = "Plane control")
+		void SetNewInvertY(bool newInvertY);
 		
 	UFUNCTION(BlueprintCallable, Category = "Plane control")
 		void RegisterSetupComponent(UKinectSetupComponent* kinectConfig);

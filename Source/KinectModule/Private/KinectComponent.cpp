@@ -8,9 +8,7 @@
 // Sets default values for this component's properties
 UKinectComponent::UKinectComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
+	
 	PrimaryComponentTick.bCanEverTick = true;
 
 	m_pKinectSensor = NULL;
@@ -197,6 +195,7 @@ void UKinectComponent::updateKinectBodyData()
 
 void UKinectComponent::processBodyFrame(IBodyFrame* bodyFrame)
 {
+
 	IBody* ppBodies[BODY_COUNT] = { 0 };
 
 	auto hr = bodyFrame->GetAndRefreshBodyData(_countof(ppBodies), ppBodies);

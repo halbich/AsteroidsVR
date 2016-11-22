@@ -220,3 +220,12 @@ void AAsteroidsVRPawn::BeginPlay()
 
 	Super::BeginPlay();
 }
+
+void AAsteroidsVRPawn::SetNewInvertY(bool newInvertY)
+{
+	if (InvertY == newInvertY)
+		return;
+
+	InvertY = newInvertY;
+	PitchSpeed *= -1;
+}
