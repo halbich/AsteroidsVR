@@ -122,6 +122,9 @@ protected:
 	UPROPERTY(Category = Plane, BlueprintReadOnly)
 		FVector2D RightControl;
 
+	UPROPERTY(Category = Plane, BlueprintReadOnly)
+		float CurrentSpeed;
+
 public:
 	/** Returns PlaneMesh subobject **/
 	FORCEINLINE class UStaticMeshComponent* GetPlaneMesh() const { return PlaneMesh; }
