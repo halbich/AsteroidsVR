@@ -34,3 +34,15 @@ enum class EKinectMeasurePoseEnum : uint8
 	Game			UMETA(DisplayName = "Game")
 
 };
+
+
+UENUM(BlueprintType)
+enum class EModalDialogResult : uint8
+{
+	None,
+	Yes,
+	No,
+	OK,
+	Cancel
+
+};
