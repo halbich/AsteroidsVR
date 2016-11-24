@@ -37,22 +37,22 @@ TArray<FKinectSetupConfigSection> UMyBPFunctionLibrary::GetDefaultKinectConfigSe
 {
 	TArray<FKinectSetupConfigSection> result;
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("front"))));
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("front")), EKinectMeasurePoseEnum::Front));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Pøiprav se a dej ruce dopøedu. Takhle poletíš rovnì."))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Mìøím dopøedný smìr")), EKinectMeasurePoseEnum::Front));
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("top"))));
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("top")), EKinectMeasurePoseEnum::Top));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Nyní dej ruce vzhùru."))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Mìøím. Takhle poletíš nahoru.")), EKinectMeasurePoseEnum::Top));
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("bottom"))));
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("bottom")), EKinectMeasurePoseEnum::Bottom));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Nyní dej ruce dolù pro opaèný smìr - zatoèení dolù."))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Mìøím. Bude následovat smìr vpravo, ale až ti øeknu, døív ne!")), EKinectMeasurePoseEnum::Bottom));
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("right"))));
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("right")), EKinectMeasurePoseEnum::Right));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Tak teï dej ruce vpravo. Snaž se nevytáèet trup."))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Mìøím. Tipneš si, jaký bude další smìr?")), EKinectMeasurePoseEnum::Right));
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("left"))));
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("left")), EKinectMeasurePoseEnum::Left));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Uhádl jsi to, je to samozøejmì doleva."))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Mìøím. Za chvilku budeme hotovi. Snad tì už nezaèaly bolet ruce?")), EKinectMeasurePoseEnum::Left));
 
-	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("jedeme"))));
+	result.Add(FKinectSetupConfigSection(FText::FromString(TEXT("Tak a hurá na to, kapitáne! Hodnì štìstí."))));
 
 	return result;
 }

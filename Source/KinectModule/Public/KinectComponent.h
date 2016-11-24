@@ -93,7 +93,7 @@ private:
 
 	void processBodyFrame(IBodyFrame* bodyFrame);
 
-	void processBodies(int nBodyCount, IBody** ppBodies);
+	void processBodies(int32 nBodyCount, IBody** ppBodies);
 
 
 	static FVector getFromJoint(Joint j)

@@ -205,20 +205,20 @@ void UKinectComponent::processBodyFrame(IBodyFrame* bodyFrame)
 		processBodies(BODY_COUNT, ppBodies);
 	}
 
-	for (int i = 0; i < _countof(ppBodies); ++i)
+	for (int32 i = 0; i < _countof(ppBodies); ++i)
 	{
 		SafeRelease(ppBodies[i]);
 	}
 }
 
-void UKinectComponent::processBodies(int nBodyCount, IBody** ppBodies)
+void UKinectComponent::processBodies(int32 nBodyCount, IBody** ppBodies)
 {
 
 	if (!m_pCoordinateMapper)
 		return;
 
 
-	for (int i = 0; i < nBodyCount; ++i)
+	for (int32 i = 0; i < nBodyCount; ++i)
 	{
 		auto data = trackedBodies[(EKinectBody)i];
 		ensure(data);
@@ -252,7 +252,7 @@ void UKinectComponent::processBodies(int nBodyCount, IBody** ppBodies)
 		hr = pBody->GetJoints(_countof(joints), joints);
 		if (SUCCEEDED(hr))
 		{
-			for (int j = 0; j < _countof(joints); ++j)
+			for (int32 j = 0; j < _countof(joints); ++j)
 			{
 				auto joint = joints[j];
 
