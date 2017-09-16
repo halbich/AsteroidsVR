@@ -252,6 +252,8 @@ void UKinectComponent::processBodies(int32 nBodyCount, IBody** ppBodies)
 		hr = pBody->GetJoints(_countof(joints), joints);
 		if (SUCCEEDED(hr))
 		{
+			//print(TEXT("Update joints"));
+
 			for (int32 j = 0; j < _countof(joints); ++j)
 			{
 				auto joint = joints[j];
